@@ -1,0 +1,9 @@
+ZeroTax is a user script that will be improve Nicovideo page.
+
+I've tested with Google Chrome dev, but I believe that it can be run on other modern browsers.
+
+![ZeroTax](http://i.imgur.com/reg9f.png)
+
+## install
+
+[zero-tax.user.js](https://raw.github.com/uu59/zerotax/master/zero-tax.user.js)
