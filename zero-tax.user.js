@@ -217,7 +217,9 @@ unbind("#playerCommentPanelOuter", "hover");
 sel('#playerCommentPanelOuter').addEventListener('mouseover', function(ev){
   this._originalOffsetLeft = this._originalOffsetLeft || this.offsetLeft;
   var bodyWidth = document.body.offsetWidth;
-  this.style.left = (bodyWidth - 10 - this.offsetWidth) + "px";
+  if(bodyWidth + 10 < this.offsetLeft + this.offsetWidth) {
+    this.style.left = (bodyWidth - 10 - this.offsetWidth) + "px";
+  }
 }, false);
 sel('#playerCommentPanelOuter').addEventListener('mouseout', function(ev){
   if(!this._originalOffsetLeft) {
