@@ -83,7 +83,7 @@ addStyle([
   '#playlist #playlistContainer * { width: 0 !important ;}',
 ]);
 
-// コメント欄を動画プレイヤー下に常時表示
+// コメント入力欄を動画プレイヤー下に常時表示
 sel('.handler').parentNode.removeChild(sel('.handler'));
 addStyle([
   '.commentOuter {',
@@ -97,6 +97,19 @@ sel('#textMarquee').parentNode.insertBefore(sel('.commentOuter'), sel('#textMarq
 sel('.commandInput input').setAttribute('placeholder', 'コマンド');
 // コマンドのポップアップ非表示
 sel('.commentInput input[type="text"]').focus();
+
+// コメント入力欄を暗くする
+addStyle([
+  '.commentOuter {',
+    'background-image: none;',
+  '}',
+  '.commandInput {',
+    'border-right: none;',
+  '}',
+  '.commentInputContainer {',
+    'border-left: #555 1px solid;',
+  '}',
+]);
 
 // 市場要らない
 addStyle([
