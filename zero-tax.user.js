@@ -130,6 +130,7 @@ addStyle([
   '#videoHeader #videoHeaderDetail {',
     'top: -14px !important;',
     'margin-right: 240px;',
+    'padding-bottom: 32px;',
     'float: none;',
     'width: auto;',
   '}',
@@ -142,9 +143,18 @@ addStyle([
   '}',
 ]);
 
+addStyle([
+  '#videoHeaderTagList #videoHeaderTagEdit { ',
+    'position: absolute;',
+    'top: 24px;',
+    'right: 0;',
+    'margin: 0;',
+  '}',
+]);
 
 setTimeout(function(){
   // タグを常に全表示
+  sel('#videoTagContainer').setAttribute('class', 'active');
   click('#videoTagContainerPin span');
 
   // 動画詳細情報を常に表示
