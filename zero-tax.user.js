@@ -42,6 +42,7 @@ var clickUntil= function(selector, fn) {
 
 // ----------------------------------------
 
+
 // ヘッダナビゲーションの幅を最大化
 addStyle([
   '#siteHeader #siteHeaderInner {',
@@ -172,3 +173,16 @@ addStyle([
 // nicoruButtonが空なのに一番上にあってよくわからないのでとりあえずマイリストを最初にする
 var mylist = sel('.defmylistButton').parentNode;
 mylist.parentNode.insertBefore(mylist, sel('.nicoruButton'));
+
+// ----------------------------------------
+
+// 2012-05-14: 本体変更に追従
+addStyle([
+  '#siteHeader {',
+    'height: 36px;',
+  '}',
+  '#videoHeaderMenu {',
+    'position: static;',
+    'float: none;',
+  '}',
+]);
