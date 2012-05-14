@@ -7,7 +7,9 @@
 // ==/UserScript==
 
 var window = unsafeWindow;
+
 var addStyle = function(css) {
+  // CSS(<style>)追加
   var s = document.createElement('style');
   document.querySelector('head').appendChild(s);
   if (!window.createPopup) { /* For Safari */  
@@ -20,24 +22,41 @@ var addStyle = function(css) {
   s.appendChild(document.createTextNode(css));
 }
 
+var evalUnsafe = function(code, args) {
+  // 今のとこjQuery.unbindを使う用
+  // 将来的にwindow.nicoruとかを参照するために使うかもしれない
+  setTimeout(function(){
+    var s = document.createElement('script');
+    var c = "(" + (code.toString()) + ').apply(this, '+JSON.stringify(args)+')';
+    s.innerHTML = c;
+    document.body.appendChild(s);
+  }, 64);
+}
+
 var sel = function() {
   // ショートカット
   return document.querySelector.apply(document, arguments);
 }
+
 var click = function(selector) {
   // 要素をクリック
   var ev = document.createEvent('MouseEvents');
   ev.initMouseEvent('click', true, true, window, 0,0,0,0,0, false, false, false, false, 0, null);
   sel(selector).dispatchEvent(ev);
 }
-var clickUntil= function(selector, fn) {
-  // fn()で何らかの変化を検知するまで何度もクリックし直す
-  click(selector);
-  if(!fn()){
-    setTimeout(function(){
-      clickUntil(selector, fn);
-    }, 1024);
-  }
+
+var unbind = function() {
+  // イベント除去
+  var args = Array.prototype.slice.call(arguments);
+  evalUnsafe(
+    function(){
+      var args = Array.prototype.slice.call(arguments);
+      var finder = args.shift();
+      var self = jQuery(finder);
+      self.unbind.apply(self, args);
+    },
+    args
+  );
 }
 
 // ----------------------------------------
@@ -133,8 +152,7 @@ setTimeout(function(){
 }, 64);
 
 // 検索
-var vm = sel('#videoHeaderMenu');
-sel('#siteHeaderInner').appendChild(vm);
+sel('#siteHeaderInner').appendChild(sel('#videoHeaderMenu'));
 addStyle([
   '#siteHeader .searchContainerTrigger {',
     'margin: 0;',
@@ -173,6 +191,33 @@ addStyle([
 // nicoruButtonが空なのに一番上にあってよくわからないのでとりあえずマイリストを最初にする
 var mylist = sel('.defmylistButton').parentNode;
 mylist.parentNode.insertBefore(mylist, sel('.nicoruButton'));
+
+// プレイヤー右のコメント欄をきびきびさせる
+addStyle([
+  '#playerContainer .lightControllFilter { ',
+    'display: block !important;',
+  '}',
+  '#playerContainer:hover .lightControllFilter { ',
+    'display: none !important;',
+  '}',
+]);
+unbind("#playerContainer", "hover");
+unbind("#playerCommentPanelOuter", "hover");
+// TODO: 理想的にはピンをオンオフしたときウィンドウが動くのを抑制したい
+sel('#playerCommentPanelOuter').addEventListener('mouseover', function(ev){
+  this._originalOffsetLeft = this._originalOffsetLeft || this.offsetLeft;
+  var bodyWidth = document.body.offsetWidth;
+  this.style.left = (bodyWidth - 10 - this.offsetWidth) + "px";
+}, false);
+sel('#playerCommentPanelOuter').addEventListener('mouseout', function(ev){
+  if(!this._originalOffsetLeft) {
+    return ;
+  }
+  var isPinned = sel('.commentPanelPinOn').style.display == "inline";
+  if(!isPinned) {
+    this.style.left = "auto";
+  }
+}, false);
 
 // ----------------------------------------
 
