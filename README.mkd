@@ -2,7 +2,7 @@ ZeroTax is a user script that will be improve Nicovideo page.
 
 I've tested with Google Chrome dev, but I believe that it can be run on other modern browsers.
 
-![ZeroTax](http://i.imgur.com/Y6Tyz.png)
+![ZeroTax](http://i.imgur.com/e8TIv.png)
 
 ## install
 
