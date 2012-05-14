@@ -111,6 +111,21 @@ addStyle([
   '}',
 ]);
 
+// マイリス数などを見えるところに置く
+var stats = sel('#videoStats').cloneNode(true);
+stats.setAttribute('id', 'videoStats-zerotax');
+sel('#textMarquee').parentNode.insertBefore(stats, sel('#textMarquee'));
+addStyle([
+  '#videoStats-zerotax {',
+    'color: #bbb;',
+  '}',
+  '#videoStats-zerotax li {',
+    'display: inline-block;',
+    'padding: 0 1ex;',
+  '}',
+]);
+
+
 // 市場要らない
 addStyle([
   '#ichibaPanel { left: -9999px; }'
