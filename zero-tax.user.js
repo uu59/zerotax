@@ -187,7 +187,7 @@ setTimeout(function(){
 
   // 動画詳細情報を常に表示
   click('.videoDetailExpand h3');
-}, 64);
+}, 128);
 
 // 検索
 sel('#siteHeaderInner').appendChild(sel('#videoHeaderMenu'));
